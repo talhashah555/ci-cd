@@ -1,0 +1,46 @@
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull request to the main branch
+
+jobs:
+  build_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build
+        run: echo "This is build command"
+
+  test_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: echo "This is testing"
+
+  push_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push
+        run: echo "This is pushing"
+
+  deploy_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "This is deploying"
+
+  dev_test_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test for Dev
+        run: echo "Tested for dev"
+
+  prd_test_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test for Prod
+        run: echo "Tested for prod"
