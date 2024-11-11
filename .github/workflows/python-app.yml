@@ -3,10 +3,10 @@ name: Python CI
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push to 'main' branch
+      - main
   pull_request:
     branches:
-      - main  # Trigger the workflow on pull request to 'main' branch
+      - main
 
 jobs:
   build:
@@ -22,14 +22,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.9'  # Specify the Python version
-
-    # Check if requirements.txt exists
-    - name: Check if requirements.txt exists
-      run: |
-        if [ ! -f requirements.txt ]; then
-          echo "requirements.txt not found!"
-          exit 1
-        fi
 
     # Install dependencies
     - name: Install dependencies
