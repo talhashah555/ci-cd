@@ -1,17 +1,17 @@
-name: General CI/CD Pipeline
+name: Node.js CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main  # Trigger on push to 'main' branch
+      - main
   pull_request:
     branches:
-      - main  # Trigger on pull request to 'main' branch
+      - main
 
 jobs:
-  # Node.js Job
-  nodejs-build:
-    runs-on: ubuntu-latest  # Choose the runner environment, here we use the latest Ubuntu
+  build:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,69 +19,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Specify the version of Node.js
+          node-version: '16'
 
       - name: Install dependencies
         run: |
-          npm install  # Replace with npm or yarn depending on your setup
+          # اگر 'package.json' کسی سب فولڈر میں ہے تو یہاں cd کمانڈ استعمال کریں
+          cd frontend  # اگر 'frontend' فولڈر میں ہے
+          npm install
 
       - name: Run tests
         run: |
-          npm test  # Replace with the test command for your project
-
-      - name: Deploy (Optional)
-        run: |
-          echo "Deploying Node.js application..."
-          # Add your deployment command here (e.g., to Heroku, AWS, etc.)
-
-  # Java Job
-  java-build:
-    runs-on: ubuntu-latest  # Choose the runner environment
-    needs: nodejs-build  # This ensures that the Node.js job must succeed before running this job.
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-
-      - name: Build with Maven
-        run: |
-          mvn clean install
-
-      - name: Run tests
-        run: |
-          mvn test
-
-      - name: Deploy (Optional)
-        run: |
-          echo "Deploying Java application..."
-          # Add your deployment command here (e.g., to Heroku, AWS, etc.)
-
-  # Go Job
-  go-build:
-    runs-on: ubuntu-latest  # Choose the runner environment
-    needs: nodejs-build  # This ensures that the Node.js job must succeed before running this job.
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.18'
-
-      - name: Install dependencies
-        run: |
-          go mod tidy
-
-      - name: Run tests
-        run: |
-          go test -v ./...
-
-      - name: Deploy (Optional)
-        run: |
-          echo "Deploying Go application..."
-          # Add your deployment command here (e.g., to Heroku, AWS, etc.)
+          npm test
